@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_small"
+        android:background="@color/bg_white"
+        android:orientation="vertical">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000">
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:name="com.google.android.gms.maps.MapFragment"
+                />
+
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:name="@+id/card_view"
+                android:layout_width="400dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                card_view:cardCornerRadius="4dp"
+                >
+                <fragment
+                    android:id="@+id/place_autocomplete_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                    >
+                </fragment>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+          >
+
+            <ImageView
+                android:id="@+id/where_image"
+                android:layout_width="match_parent"
+                android:layout_height="600px"
+                android:background="@drawable/bg_round_gray"
+                android:layout_margin="@dimen/spacing_large"
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter" />
+
+            <ImageView
+                android:id="@+id/where_image_register"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/button_circle"
+                android:elevation="4dp"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_camera" />
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/where_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_small"
+            android:background="@drawable/bg_round"
+            android:gravity="start"
+            android:hint="@string/input_where_name"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:padding="@dimen/spacing_large"
+            android:textSize="@dimen/text_size_small2" />
+
+        <EditText
+            android:id="@+id/where_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_small"
+            android:background="@drawable/bg_round"
+            android:gravity="start"
+            android:hint="@string/input_where_address"
+            android:maxLines="1"
+            android:padding="@dimen/spacing_large"
+            android:textSize="@dimen/text_size_small2" />
+
+        <EditText
+            android:id="@+id/where_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_small"
+            android:background="@drawable/bg_round"
+            android:gravity="start"
+            android:hint="@string/input_where_tel"
+            android:inputType="phone"
+            android:maxLength="13"
+            android:maxLines="1"
+            android:padding="@dimen/spacing_large"
+            android:textSize="@dimen/text_size_small2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/where_latitude"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height= "wrap_content"
+                android:gravity="start"
+                android:background="@drawable/bg_round"
+                android:hint="@string/input_where_latitude"
+                android:maxLines="1"
+                android:layout_margin="4dp"
+                android:padding="@dimen/spacing_large"
+                android:textSize="@dimen/text_size_small2" />
+
+            <EditText
+                android:id="@+id/where_longitude"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height= "wrap_content"
+                android:gravity="start"
+                android:background="@drawable/bg_round"
+                android:hint="@string/input_where_longitude"
+                android:maxLines="1"
+                android:layout_margin="4dp"
+                android:padding="@dimen/spacing_large"
+                android:textSize="@dimen/text_size_small2" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/current_text_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:gravity="end">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:text="@string/input_text_length"
+                android:textColor="@color/text_color_black"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/current_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/text_color_black"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/text_max_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/input_text_max_length"
+                android:textColor="@color/text_color_black"
+                android:textSize="@dimen/text_size_small" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/where_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_small"
+            android:background="@drawable/bg_round"
+            android:fadeScrollbars="false"
+            android:gravity="start"
+            android:hint="@string/input_where_description"
+            android:lines="9"
+            android:maxLength="500"
+            android:overScrollMode="always"
+            android:padding="@dimen/spacing_large"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            android:textSize="@dimen/text_size_small2" />
+
+        <LinearLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small2"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_small"
+                android:layout_weight="1"
+                android:background="@drawable/button_round"
+                android:text="@string/complete"
+                android:textSize="@dimen/text_size_small2" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

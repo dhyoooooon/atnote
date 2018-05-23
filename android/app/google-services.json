@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "872748997964",
+    "firebase_url": "https://atnote-79c9d.firebaseio.com",
+    "project_id": "atnote-79c9d",
+    "storage_bucket": "atnote-79c9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872748997964:android:b55672130c2f977c",
+        "android_client_info": {
+          "package_name": "kr.ac.afa.atnote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872748997964-l0qtr4413aoat6kkgkjmdo5m57glggl6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxEWs73i-neqmsuFPk6G_lSVneoSBsuqY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
