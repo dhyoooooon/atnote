@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview"
+        card_view:cardCornerRadius="3dp"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:id="@+id/image"/>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_large"
+                android:textSize="@dimen/text_size_small2"
+                android:drawableLeft="@drawable/ic_keep_on2"
+                android:drawablePadding="10dip"
+                android:text="ddd"/>
+
+            <TextView
+                android:id="@+id/place_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_large"
+                android:textSize="@dimen/text_size_small2"
+                android:drawableLeft="@drawable/ic_map2"
+                android:drawablePadding="10dip"
+                android:text="ddd"/>
+            <TextView
+                android:id="@+id/place_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_large"
+                android:textSize="@dimen/text_size_small2"
+                android:drawableLeft="@drawable/ic_tell2"
+                android:drawablePadding="10dip"
+                android:text="ddd"/>
+            <TextView
+                android:id="@+id/place_explain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_large"
+                android:textSize="@dimen/text_size_small2"
+                android:background="@color/bg_default"
+                android:text="ddd"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

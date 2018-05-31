@@ -1,18 +1,24 @@
 package kr.ac.afa.atnote;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -58,10 +65,21 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 public class MainActivity4 extends Fragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -89,15 +107,26 @@ public class MainActivity4 extends Fragment implements OnMapReadyCallback,
 
     private DatabaseReference mDatabase;
     private Button button;
+    private ImageView picturebut;
+    private ImageView image;
     private EditText where_name;
     private EditText where_address;
     private EditText where_tel;
     private EditText where_description;
     private EditText where_latitude;
     private EditText where_longitude;
+    private ProgressDialog asyncDialog;
+
     double latitude;
     double longitude;
 
+    final int REQ_CODE_SELECT_IMAGE=100;
+    private Bitmap image_bitmap;
+    private StorageReference mStorageReference;
+    private String name_Str;
+    private String imgPath;
+    private String imgName;
+    //사진 불러오기 인자
 
 
     public MainActivity4() {
@@ -139,6 +168,11 @@ public class MainActivity4 extends Fragment implements OnMapReadyCallback,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mStorageReference = FirebaseStorage.getInstance().getReference();
+        if(Build.VERSION.SDK_INT>23){
+            requestPermissions(new String[] {READ_EXTERNAL_STORAGE}, 0);
+        }
+
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -150,7 +184,10 @@ public class MainActivity4 extends Fragment implements OnMapReadyCallback,
         where_description = (EditText) layout.findViewById(R.id.where_description);
         where_latitude = (EditText) layout.findViewById(R.id.where_latitude);
         where_longitude = (EditText) layout.findViewById(R.id.where_longitude);
-
+        // 장소 관련
+        picturebut = (ImageView)layout.findViewById(R.id.where_image_register);
+        image = (ImageView)layout.findViewById(R.id.where_image);
+        //이미지 삽입
         mapView = (MapView)layout.findViewById(R.id.map);
         mapView.getMapAsync(this);
 
@@ -170,7 +207,6 @@ public class MainActivity4 extends Fragment implements OnMapReadyCallback,
 
                 latitude = place.getLatLng().latitude;
                 longitude = place.getLatLng().longitude;
-
                 where_latitude.setText(String.valueOf(latitude));
                 where_longitude.setText(String.valueOf(longitude));
                 //마커 위지 가져오기
@@ -185,14 +221,60 @@ public class MainActivity4 extends Fragment implements OnMapReadyCallback,
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
+
+        picturebut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+                intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, REQ_CODE_SELECT_IMAGE);
+
+            }
+        });
         //버튼 눌렀을 때 반영
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                asyncDialog = new ProgressDialog(getActivity());
+                asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                asyncDialog.setMessage("저장 중입니다..");
+                asyncDialog.show();
+
                 writeNewInform(where_name.getText().toString(), where_address.getText().toString(), where_tel.getText().toString(), where_description.getText().toString(), where_latitude.getText().toString(), where_longitude.getText().toString());
-                Toast.makeText(getActivity(), "저장되었습니다 ! 확인하세요", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "텍스트 저장 완료", Toast.LENGTH_LONG).show();
+
+                StorageReference spaceRef = mStorageReference.child("images/"+where_name.getText().toString());
+                    if(imgPath != null) {
+                        Uri file = Uri.fromFile(new File(imgPath));
+                        spaceRef.putFile(file)
+                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        // Get a URL to the uploaded content
+                                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                                        Toast.makeText(getActivity(), "이미지 저장 완료", Toast.LENGTH_SHORT).show();
+                                        asyncDialog.dismiss();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        Toast.makeText(getActivity(), "이미지 저장 실패", Toast.LENGTH_SHORT).show();
+                                        asyncDialog.dismiss();
+                                        // Handle unsuccessful uploads
+                                        // ...
+                                    }
+                                });
+                    }else{
+                        Toast.makeText(getActivity(), "이미지가 없는 상태로 저장됩니다", Toast.LENGTH_SHORT).show();
+                        asyncDialog.dismiss();
+                    }
+
             }
         });
+
         return layout;
     }
 
@@ -369,9 +451,9 @@ public class MainActivity4 extends Fragment implements OnMapReadyCallback,
         }
 
         LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(UPDATE_INTERVAL_MS);
-        locationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        locationRequest.setInterval(240*1000);
+        locationRequest.setFastestInterval(60*1000);
 
         if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if ( ActivityCompat.checkSelfPermission(getActivity(),
@@ -465,4 +547,53 @@ public class MainActivity4 extends Fragment implements OnMapReadyCallback,
             }
         });
     }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Toast.makeText(getActivity(), "이미지를 불러왔습니다",Toast.LENGTH_SHORT).show();
+        if(requestCode == REQ_CODE_SELECT_IMAGE)
+        {
+            if(resultCode== Activity.RESULT_OK)
+            {
+                try {
+                    //Uri에서 이미지 이름을 얻어온다.
+                    name_Str = getImageNameToUri(data.getData());
+                    //이미지 데이터를 비트맵으로 받아온다.
+                    image_bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), data.getData());
+                   //배치해놓은 ImageView에 set
+                    image.setImageBitmap(image_bitmap);
+                    image.setDrawingCacheEnabled(true);
+                    image.buildDrawingCache();
+                    //Toast.makeText(getBaseContext(), "name_Str : "+name_Str , Toast.LENGTH_SHORT).show();
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (Exception e)
+
+                {
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
+
+    }
+    public String getImageNameToUri(Uri data)
+    {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContext().getContentResolver().query(data, proj, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        cursor.moveToFirst();
+
+        imgPath = cursor.getString(column_index);
+        imgName = imgPath.substring(imgPath.lastIndexOf("/")+1);
+
+        return imgName;
+    }
+
 }

@@ -15,6 +15,18 @@
       },
       "oauth_client": [
         {
+          "client_id": "872748997964-lfhaemrp9r3k75jntad13hgicp0sftm6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.ac.afa.atnote",
+            "certificate_hash": "ff615576069ea78d9e4224a6c2f0266e662927e3"
+          }
+        },
+        {
+          "client_id": "872748997964-l0qtr4413aoat6kkgkjmdo5m57glggl6.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
           "client_id": "872748997964-l0qtr4413aoat6kkgkjmdo5m57glggl6.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +41,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872748997964-l0qtr4413aoat6kkgkjmdo5m57glggl6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

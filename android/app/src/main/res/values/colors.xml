@@ -11,6 +11,7 @@
     <color name="text_color_white">#FFF</color>
     <color name="text_color_gray">#888888</color>
     <color name="text_color_paran">#303F9F</color>
+    <color name="text_color_whiteorange">#ff8c00</color>
 
     <color name="textPrimary">#212121</color>
     <color name="textSecondary">#727272</color>

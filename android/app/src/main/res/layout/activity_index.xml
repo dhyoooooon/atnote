@@ -12,7 +12,7 @@
         android:layout_marginTop="104dp"
         android:gravity="end"
         android:text="@string/index_message"
-        android:textColor="@color/text_color_black"
+        android:textColor="@color/text_color_paran"
         android:textSize="@dimen/text_size_large2"
         android:textStyle="bold" />
 

@@ -14,7 +14,7 @@
     <string name="permission_setting_restart">권한을 설정하고 다시 실행해주세요!</string>
 
     <!-- 시작 화면 -->
-    <string name="index_message">인생의 장소\n모두 모아\n기록하자</string>
+    <string name="index_message">Make Memory\nStore Memory\nFind Memory</string>
     <string name="atnote">Atnote</string>
 
     <string name="submit">확인</string>
@@ -23,13 +23,12 @@
     <!-- 왼쪽 메뉴 -->
     <string name="nav_list">방문리스트</string>
     <string name="nav_map">지도리스트</string>
-    <string name="nav_keep">즐겨찾기</string>
+    <string name="nav_keep">추천여행지</string>
     <string name="nav_register">지점등록</string>
     <string name="nav_profile">프로필설정</string>
 
     <!-- 공통 -->
     <string name="skip_string">...</string>
-
     <string name="close">닫기</string>
     <string name="cancel">취소</string>
     <string name="setting">설정</string>
@@ -56,17 +55,6 @@
 
     <string name="not_valid_tel_number">잘못된 번호입니다.</string>
 
-
-    <!-- 맛집 이미지 등록 화면 -->
-    <string name="title_bestfood_image_register">이미지 등록</string>
-    <string name="no_image_ready">이미지를 준비중입니다. 잠시 후에 다시 시도해주세요</string>
-    <string name="no_image_selected">이미지를 먼저 선택해주세요</string>
-
-    <!-- 맛집 리스트 화면 -->
-    <string name="order_meter">거리순</string>
-    <string name="order_favorite">인기순</string>
-    <string name="order_recent">최근순</string>
-
     <!-- 지도 리스트 화면 -->
     <string name="list_open">목록보기</string>
     <string name="list_close">목록닫기</string>
@@ -75,14 +63,7 @@
     <string name="unit_m">m</string>
     <string name="unit_km">Km</string>
 
-    <!-- DialogLib.java -->
-    <string name="keep_insert">즐겨찾기 등록</string>
-    <string name="keep_insert_message">즐겨찾기에 등록하시겠습니까?</string>
-
-    <string name="keep_delete">즐겨찾기 삭제</string>
-    <string name="keep_delete_message">즐겨찾기에서 삭제하시겠습니까?</string>
-
-    <!-- 맛집 정보 화면 -->
+    <!-- 지점 정보 화면 -->
     <string name="description">상세설명</string>
     <string name="map">지도</string>
     <string name="location">위치보기</string>
@@ -90,8 +71,7 @@
     <string name="loading">잠시만 기다려주세요</string>
     <string name="loading_not">잠시후에 다시 시도해주세요</string>
 
-    <!-- 즐겨찾기 -->
-    <string name="no_keep">즐겨찾기에 등록된 음식점이 없습니다.</string>
-    <string name="title_activity_ttmaps">Map</string>
+    <!-- 개발자 -->
+    <string name="my"> Copyright(c)2018 YOONDH version 1.0</string>
 
 </resources>

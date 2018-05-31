@@ -1,6 +1,5 @@
 package kr.ac.afa.atnote;
 
-import android.app.Fragment;
 import android.os.Bundle;
         import android.support.design.widget.NavigationView;
         import android.support.v4.view.GravityCompat;
@@ -10,7 +9,6 @@ import android.os.Bundle;
         import android.support.v7.widget.Toolbar;
         import android.view.MenuItem;
         import android.view.View;
-import kr.ac.afa.atnote.TTMapsActivity;
 
 /**
  * 지점 정보앱의 핵심 액티비티이며 왼쪽에 네비게이션 뷰를 가지며
